@@ -705,8 +705,8 @@ if ($ref) { $_SESSION['ref'] = $ref; }
                     <label for="three_months_ready">क्या आप इस समस्या के साथ और 3 महीने बिताने को तैयार हैं? *</label>
                     <select id="three_months_ready" name="three_months_ready" required>
                         <option value="">Select an option / विकल्प चुनें</option>
-                        <option value="no_need_solution_now">No, I need a solution now. (नहीं, मुझे अभी समाधान चाहिए।)</option>
-                        <option value="yes_maybe_later">Yes, maybe later. (हाँ, शायद बाद में।)</option>
+                        <option value="no">No, I need a solution now. (नहीं, मुझे अभी समाधान चाहिए।)</option>
+                        <option value="yes">Yes, maybe later. (हाँ, शायद बाद में।)</option>
                     </select>
                 </div>
 

@@ -27,6 +27,8 @@ $logs = $stmt->fetchAll();
 
 // Handle actions
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    CSRF::validateRequest();
+
     if (isset($_POST['assign_lead'])) {
         $new_user_id = $_POST['assigned_to'];
         assign_lead($lead_id, $new_user_id);
@@ -117,6 +119,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <h3>🛠️ Admin Actions</h3>
             
             <form method="POST" style="display:inline-block; margin-right:15px;">
+                <?php echo CSRF::inputField(); ?>
                 <select name="assigned_to" required>
                     <option value="">Assign to...</option>
                     <?php foreach ($team_members as $member): ?>
@@ -129,6 +132,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </form>
             
             <form method="POST" style="display:inline-block; margin-right:15px;">
+                <?php echo CSRF::inputField(); ?>
                 <select name="status" required>
                     <option value="">Update Status...</option>
                     <option value="New" <?php echo $lead['status'] == 'New' ? 'selected' : ''; ?>>New</option>
@@ -142,6 +146,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </form>
             
             <form method="POST" style="display:inline-block; margin-right:15px;">
+                <?php echo CSRF::inputField(); ?>
                 <select name="score" required>
                     <option value="">Update Score...</option>
                     <option value="HOT" <?php echo $lead['lead_score'] == 'HOT' ? 'selected' : ''; ?>>🔥 HOT</option>
@@ -152,6 +157,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </form>
             
             <form method="POST" style="display:inline-block;" onsubmit="return confirm('Are you sure you want to delete this lead?');">
+                <?php echo CSRF::inputField(); ?>
                 <button type="submit" name="delete_lead" style="background:#e74c3c;">🗑️ Delete Lead</button>
             </form>
         </div>
@@ -217,6 +223,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
             
             <form method="POST">
+                <?php echo CSRF::inputField(); ?>
                 <textarea name="note" placeholder="Add a note..." required rows="4"></textarea>
                 <button type="submit" name="add_note">Add Note</button>
             </form>

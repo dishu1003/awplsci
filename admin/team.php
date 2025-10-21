@@ -7,6 +7,8 @@ $pdo = get_pdo_connection();
 
 // Handle team member actions
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    CSRF::validateRequest();
+
     if (isset($_POST['add_member'])) {
         $name = $_POST['name'];
         $email = $_POST['email'];
@@ -164,6 +166,7 @@ $team_members = $stmt->fetchAll();
                         <button onclick="openPasswordModal(<?php echo $member['id']; ?>, '<?php echo htmlspecialchars($member['name']); ?>')" 
                                 class="btn-small" style="background:#f39c12;">Reset Pass</button>
                         <form method="POST" style="display:inline;" onsubmit="return confirm('Delete this member?');">
+                            <?php echo CSRF::inputField(); ?>
                             <input type="hidden" name="user_id" value="<?php echo $member['id']; ?>">
                             <button type="submit" name="delete_member" class="btn-small" style="background:#e74c3c;">Delete</button>
                         </form>
@@ -180,6 +183,7 @@ $team_members = $stmt->fetchAll();
             <span class="close" onclick="closeModal('addModal')">&times;</span>
             <h2>Add New Team Member</h2>
             <form method="POST">
+                <?php echo CSRF::inputField(); ?>
                 <div class="form-group">
                     <label>Full Name *</label>
                     <input type="text" name="name" required>
@@ -207,6 +211,7 @@ $team_members = $stmt->fetchAll();
             <span class="close" onclick="closeModal('editModal')">&times;</span>
             <h2>Update Status</h2>
             <form method="POST">
+                <?php echo CSRF::inputField(); ?>
                 <input type="hidden" name="user_id" id="edit_user_id">
                 <div class="form-group">
                     <label>Member: <strong id="edit_member_name"></strong></label>
@@ -229,6 +234,7 @@ $team_members = $stmt->fetchAll();
             <span class="close" onclick="closeModal('passwordModal')">&times;</span>
             <h2>Reset Password</h2>
             <form method="POST">
+                <?php echo CSRF::inputField(); ?>
                 <input type="hidden" name="user_id" id="pass_user_id">
                 <div class="form-group">
                     <label>Member: <strong id="pass_member_name"></strong></label>
