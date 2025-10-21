@@ -50,6 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             try {
                 if (login_user($username, $password)) {
                     error_log("LOGIN: login_user returned TRUE, redirecting...");
+                    session_write_close();
                     header('Location: ' . (is_admin() ? '/admin/' : '/team/'));
                     exit;
                 } else {
