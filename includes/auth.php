@@ -96,7 +96,9 @@ function login_user($username, $password) {
         $user = $stmt->fetch();
 
         if ($user && password_verify($password, $user['password'])) {
-            // Regenerate session ID to prevent session fixation
+            // Save session data and regenerate session ID to prevent session fixation
+            session_commit();
+            session_start();
             session_regenerate_id(true);
 
             // Set session variables
