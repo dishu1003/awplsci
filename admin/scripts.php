@@ -7,6 +7,8 @@ $pdo = get_pdo_connection();
 
 // Handle script actions
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    CSRF::validateRequest();
+
     if (isset($_POST['add_script'])) {
         $type = $_POST['type'];
         $title = $_POST['title'];
@@ -123,6 +125,7 @@ foreach ($scripts as $script) {
                                 <button onclick="openEditModal(<?php echo $script['id']; ?>, '<?php echo htmlspecialchars($script['title']); ?>', '<?php echo htmlspecialchars(addslashes($script['content'])); ?>', '<?php echo $script['visibility']; ?>')" 
                                         class="btn-small" style="background:#f39c12;">✏️ Edit</button>
                                 <form method="POST" style="display:inline;" onsubmit="return confirm('Delete this script?');">
+                                    <?php echo CSRF::inputField(); ?>
                                     <input type="hidden" name="script_id" value="<?php echo $script['id']; ?>">
                                     <button type="submit" name="delete_script" class="btn-small" style="background:#e74c3c;">🗑️ Delete</button>
                                 </form>
@@ -140,6 +143,7 @@ foreach ($scripts as $script) {
             <span class="close" onclick="closeModal('addModal')">&times;</span>
             <h2>Add New Script</h2>
             <form method="POST">
+                <?php echo CSRF::inputField(); ?>
                 <div class="form-group">
                     <label>Script Type *</label>
                     <select name="type" required>
@@ -175,6 +179,7 @@ foreach ($scripts as $script) {
             <span class="close" onclick="closeModal('editModal')">&times;</span>
             <h2>Edit Script</h2>
             <form method="POST">
+                <?php echo CSRF::inputField(); ?>
                 <input type="hidden" name="script_id" id="edit_script_id">
                 <div class="form-group">
                     <label>Title *</label>
